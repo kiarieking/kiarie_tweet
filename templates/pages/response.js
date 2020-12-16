@@ -7,5 +7,6 @@ xhr.responseType = responseType
 xhr.onload(method,url)=function(){
     const serveresponse = xhr.response
     var listeditems = serveresponse.response
+    console.log(listeditems)
 }
 xhr.send()
