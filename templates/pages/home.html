@@ -7,6 +7,17 @@ welcome to our twitter app
 </div>
 
 <script>
+    function Likebtn(){
+        return '<button class="btn btn-primary">Like</button>'
+    }
+
+    function formatedTweet(tweet){
+        var formatedtweet = "<div class='mb-4 tweet' id='tweet-"+tweet.id+"'<p>"+tweet.content+
+            "</p><div class='btn-group'>"+Likebtn()+
+            "</div></div> "
+        return formatedtweet
+    }
+
     const tweetelement = document.getElementById('tweets')
      
 
@@ -25,7 +36,8 @@ welcome to our twitter app
         
     for (let i=0; i<listeditems.length; i++){
         console.log(listeditems[i])
-        var currentItem = '<h1>'+listeditems[i].id+'</h1>'+'<p>'+listeditems[i].content+'</p>'
+        var tweetobj = listeditems[i]
+        var currentItem = formatedTweet(tweetobj)
         tweetstr += currentItem
     }
     tweetelement.innerHTML = tweetstr
