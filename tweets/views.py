@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404,Http404
+from django.shortcuts import render, get_object_or_404,Http404,redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Tweet
 import random
@@ -10,9 +10,12 @@ def home_view(request):
 
 def tweet_create_view(request, *args, **kwargs):
     form = Tweetform(request.POST or None)
+    next_url = request.POST.get('next') or None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
+        if next_url != None:
+            return redirect(next_url)
         form = Tweetform()
     return render(request, 'components/form.html', context={'form':form} )
 
