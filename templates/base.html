@@ -11,9 +11,11 @@
     <title>Hello, world!</title>
   </head>
   <body>
+  <div class="container-fluid">
+    {% include "components/navbar.html" %}
     {%block content%}
     {%endblock %}
-  
+  </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

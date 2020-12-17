@@ -1,19 +1,26 @@
 {% extends "base.html" %}
 
 {%block content%}
-welcome to our twitter app
+<div class="row text-center">
+    <div class="col">
+        <h2>welcome to our twitter app</h2>
+    </div>
+</div>
 <div id='tweets'>
     loading...
 </div>
 
 <script>
-    function Likebtn(){
-        return '<button class="btn btn-primary">Like</button>'
+    function handleDidLike(tweet,currentLikes){
+        console.log(tweet, currentLikes)
+    }
+    function Likebtn(tweet,currentLikes){
+        return '<button class="btn btn-primary" onclick=handleDidLike('+tweet.id+',' +tweet.likes+')>'+tweet.likes +' Likes</button>'
     }
 
     function formatedTweet(tweet){
         var formatedtweet = "<div class='mb-4 tweet' id='tweet-"+tweet.id+"'<p>"+tweet.content+
-            "</p><div class='btn-group'>"+Likebtn()+
+            "</p><div class='btn-group'>"+Likebtn(tweet)+
             "</div></div> "
         return formatedtweet
     }
