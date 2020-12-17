@@ -6,7 +6,7 @@
         <h2>welcome to our twitter app</h2>
     </div>
 </div>
-<div id='tweets'>
+<div class='row' id='tweets'>
     loading...
 </div>
 
@@ -19,7 +19,7 @@
     }
 
     function formatedTweet(tweet){
-        var formatedtweet = "<div class='mb-4 tweet' id='tweet-"+tweet.id+"'<p>"+tweet.content+
+        var formatedtweet = "<div class='col-12 col-md-10 mx-auto border bg-light rounded py-3 mb-4 tweet' id='tweet-"+tweet.id+"'<p>"+tweet.content+
             "</p><div class='btn-group'>"+Likebtn(tweet)+
             "</div></div> "
         return formatedtweet
