@@ -35,11 +35,18 @@
         xhr.open(method,url)
         xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
         xhr.setRequestHeader('X-Requested-With','XMLHttpRequest')
+        const tweetelement = document.getElementById('tweets')
         xhr.onload=function(){
-            const serverResponse = xhr.response
-            console.log(serverResponse)
-            const tweetelement = document.getElementById('tweets')
-            loadtweets(tweetelement)
+            if (xhr.status===201){
+                const newTweet = xhr.response
+                const newTweetsJson = JSON.parse(newTweet)
+                console.log(newTweetsJson.likes)
+                const newTweetElement = formatedTweet(newTweetsJson)
+                const oghtml = tweetelement.innerHTML
+                tweetelement.innerHTML = newTweetElement+oghtml
+            }
+            // console.log(serverResponse)
+            // loadtweets(tweetelement)
         }
         xhr.send(formData)
         
@@ -76,7 +83,7 @@
         xhr.onload = function(){
             const serverResponse = xhr.response
             var listeditems = serverResponse.response
-            console.log(serverResponse)
+            // console.log(serverResponse)
             var tweetstr = ''
             
         for (let i=0; i<listeditems.length; i++){
