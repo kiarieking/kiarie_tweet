@@ -12,7 +12,7 @@
         <form id='tweet-create-form' class='form' method='POST' action='/tweet-create'>
             {% csrf_token %}
             <input type="hidden" value='/home' name='next'/>
-            <textarea class="form-control" name='content' placeholder="what's on your mind..."></textarea>
+            <textarea required='required' class="form-control" name='content' placeholder="what's on your mind..."></textarea>
             <button type='submit' class='btn btn-secondary'>tweet</button>
         </form>
     </div>
@@ -44,9 +44,19 @@
                 const newTweetElement = formatedTweet(newTweetsJson)
                 const oghtml = tweetelement.innerHTML
                 tweetelement.innerHTML = newTweetElement+oghtml
+                myForm.reset()
+            }
+            else if(xhr.status===400){
+                alert('bad request error')
+            }
+            else if(xhr.status===500){
+                alert("A server error occured, please try again later")
             }
             // console.log(serverResponse)
             // loadtweets(tweetelement)
+        }
+        xhr.onerror = function(){
+            alert('an Error occured while loading the page')
         }
         xhr.send(formData)
         
