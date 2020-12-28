@@ -7,6 +7,8 @@ import random
 from .forms import Tweetform
 # Create your views here.
 
+
+
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def home_view(request):
     return render(request, 'pages/home.html')
