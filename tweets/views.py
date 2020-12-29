@@ -11,14 +11,23 @@ from .forms import Tweetform
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def home_view(request):
+    print(request.user or none)
     return render(request, 'pages/home.html')
 
 
 def tweet_create_view(request, *args, **kwargs):
+    user = request.user
+    if not user.is_authenticated:
+        user=None
+        if request.is_ajax():
+            return JsonResponse({},status=401)
+        return redirect(settings.LOGIN_URL)
+
     form = Tweetform(request.POST or None)
     next_url = request.POST.get('next') or None
     if form.is_valid():
         obj = form.save(commit=False)
+        obj.user = request.user or None
         obj.save()
         if request.is_ajax():
             return JsonResponse(obj.serialize(), status=201)
