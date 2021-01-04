@@ -15,6 +15,8 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def home_view(request):
     print(request.user or none)
     return render(request, 'pages/home.html')
+
+
 @api_view(['POST'])
 def tweet_create_view(request, *args, **kwargs):
     serializer = TweetSerializer(data=request.POST or None)
@@ -22,6 +24,12 @@ def tweet_create_view(request, *args, **kwargs):
         serializer.save(user = request.user)
         return Response(serializer.data, status=201)
     return Response({}, status=400)
+
+@api_view(['GET'])
+def tweet_list_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    serializer = TweetSerializer(qs, many=True)
+    return Response(serializer.data, )    
 
 def tweet_create_view_Django(request, *args, **kwargs):
     user = request.user
@@ -47,7 +55,7 @@ def tweet_create_view_Django(request, *args, **kwargs):
              return JsonResponse(form.errors,status=400)
     return render(request, 'components/form.html', context={'form':form} )
 
-def tweet_list_view(request, *args, **kwargs):
+def tweet_list_view_pure_Django(request, *args, **kwargs):
     qs = Tweet.objects.all()
     tweets_list = [x.serialize() for x in qs]
     data = {
