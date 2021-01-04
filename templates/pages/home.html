@@ -78,6 +78,10 @@
             else if(xhr.status===500){
                 alert("A server error occured, please try again later")
             }
+            else if(xhr.status===401){
+                alert("You must be logged in to tweet :(")
+                window.location.href = "/login"
+            }
             // console.log(serverResponse)
             // loadtweets(tweetelement)
         }

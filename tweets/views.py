@@ -5,17 +5,25 @@ from django.conf import settings
 from .models import Tweet
 import random
 from .forms import Tweetform
+from .serializer import TweetSerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 # Create your views here.
-
 
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 def home_view(request):
     print(request.user or none)
     return render(request, 'pages/home.html')
-
-
+@api_view(['POST'])
 def tweet_create_view(request, *args, **kwargs):
+    serializer = TweetSerializer(data=request.POST or None)
+    if serializer.is_valid():
+        serializer.save(user = request.user)
+        return Response(serializer.data, status=201)
+    return Response({}, status=400)
+
+def tweet_create_view_Django(request, *args, **kwargs):
     user = request.user
     if not user.is_authenticated:
         user=None
