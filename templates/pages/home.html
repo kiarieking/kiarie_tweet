@@ -82,6 +82,10 @@
                 alert("You must be logged in to tweet :(")
                 window.location.href = "/login"
             }
+            else if(xhr.status===403){
+                alert("You need to be logged in to tweet :(")
+                window.location.href = "/login"
+            }
             // console.log(serverResponse)
             // loadtweets(tweetelement)
         }
@@ -99,7 +103,7 @@
     
     }
     function Likebtn(tweet,currentLikes){
-        return '<button class="btn btn-primary" onclick=handleDidLike('+tweet.id+',' +tweet.likes+')>'+tweet.likes +' Likes</button>'
+        return '<button class="btn btn-primary" onclick=handleDidLike()>'+tweet.likes +' Likes</button>'
     }
 
     function formatedTweet(tweet){
