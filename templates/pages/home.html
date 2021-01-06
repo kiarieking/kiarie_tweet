@@ -25,6 +25,23 @@
 
 <script>
 
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
     function HandleTweetFormError(msg, display){
         let myErrorDiv = document.getElementById('tweet-create-form-error')
         if (display===true){
@@ -99,11 +116,29 @@
     const tweetCreateEl = document.getElementById('tweet-create-form')
     tweetCreateEl.addEventListener('submit', handleTweetSubmitFrom)
 
-    function handleDidLike(tweet,currentLikes){
-    
+    function handleDidLike(tweet_id,currentLikes){
+        const csrftoken = getCookie('csrftoken');
+        const url = 'tweet_like/action'
+        const method = 'POST'
+        const xhr = new XMLHttpRequest()
+        const data = JSON.stringify({
+            id:tweet_id,
+            action:'like'
+        })
+
+        
+        xhr.open(method, url)
+        xhr.setRequestHeader('Content-Type','application/json')
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+        xhr.setRequestHeader('X-Requested-With','XMLHttpRequest')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function(){
+            console.log(xhr.status, xhr.response)
+        }
+        xhr.send(data)
     }
     function Likebtn(tweet,currentLikes){
-        return '<button class="btn btn-primary" onclick=handleDidLike()>'+tweet.likes +' Likes</button>'
+        return '<button class="btn btn-primary" onclick=handleDidLike('+tweet.id+','+tweet.likes+')>'+tweet.likes +' Likes</button>'
     }
 
     function formatedTweet(tweet){

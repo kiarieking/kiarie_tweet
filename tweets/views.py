@@ -72,11 +72,11 @@ def tweet_like_view(request, tweet_id, *args, **kwargs):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def tweet_action_view(request, *args, **kwargs):
-    serializer = TweetActionSerialier(request.POST)
+    serializer = TweetActionSerialier(data=request.data)
     if serializer.is_valid():
         data = serializer.validated_data
-        id = serializer.get('id')
-        action = serializer.get('action')
+        id = data.get('id')
+        action = data.get('action')
 
         qs = Tweet.objects.filter(id = id)
         if not qs.exists():
@@ -88,7 +88,7 @@ def tweet_action_view(request, *args, **kwargs):
             obj.likes.remove(request.user)
         elif action == 'retweet':
             pass           
-
+    return Response({'message':'Tweet liked'}, status=200)
        
 
 # def tweet_create_view_Django(request, *args, **kwargs):
