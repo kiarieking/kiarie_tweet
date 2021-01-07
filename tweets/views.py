@@ -84,11 +84,13 @@ def tweet_action_view(request, *args, **kwargs):
         obj = qs.first()
         if action == 'like':
             obj.likes.add(request.user)
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
         elif action == 'unlike':
             obj.likes.remove(request.user)
         elif action == 'retweet':
             pass           
-    return Response({'message':'Tweet liked'}, status=200)
+    return Response({}, status=200)
        
 
 # def tweet_create_view_Django(request, *args, **kwargs):
