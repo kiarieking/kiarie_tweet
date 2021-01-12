@@ -25,7 +25,11 @@ class TweetTestCase(TestCase):
     def test_api_tweetAction(self):
         client = self.get_client()
         response = client.post("/tweet_like/action",{"id":2, "action":"like"})
-        print (response.status_code)
         self.assertEqual(response.status_code, 200)
+        response = client.post("/tweet_like/action",{"id":2, "action":"unlike"}) 
+        self.assertEqual(response.status_code, 200)
+        response = client.post("/tweet_like/action", {"id":2, "action":"retweet"})
+        self.assertEqual(response.status_code, 200)
+
 
         
