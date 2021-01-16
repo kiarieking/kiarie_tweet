@@ -19,6 +19,13 @@ function loadtweets(callback){
   xhr.send()
 }
 
+function Tweet(props){
+  const {tweet} = props
+  return <div className='col-10 mx-auto col-md-6'>
+    {tweet.content}
+  </div>
+}
+
 function App() {
   const [tweets, setTweets] = useState([])
   useEffect(()=>{
@@ -41,8 +48,8 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <p>
-          {tweets.map((tweet, index)=>{
-            return <li>{tweet.content}</li>
+          {tweets.map((item, index)=>{
+            return <Tweet tweet={item} key={index} />
           })}
         </p>
         <a
