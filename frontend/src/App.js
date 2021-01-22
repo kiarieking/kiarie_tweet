@@ -19,13 +19,23 @@ function loadtweets(callback){
   xhr.send()
 }
 
+function Actionbtn(props){
+  const {tweet, action} = props
+  const className = props.className ? props.className : 'btn btn-primary'
+  return action.type === 'like' ? <button className={className} > {tweet.likes} Likes</button> : null
+}
+
 function Tweet(props){
   const {tweet} = props
   const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
-  return <p className={className}>
+  return <div className={className}>
    {tweet.id} - {tweet.content}
-  </p>
+   <div className='btn btn-group'>
+     <Actionbtn tweet={tweet} action={{type:'like'}}/>
+   </div>
+  </div>
 }
+
 
 function App() {
   const [tweets, setTweets] = useState([])
