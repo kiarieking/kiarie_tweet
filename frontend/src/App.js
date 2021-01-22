@@ -21,9 +21,10 @@ function loadtweets(callback){
 
 function Tweet(props){
   const {tweet} = props
-  return <div className='col-10 mx-auto col-md-6'>
-    {tweet.content}
-  </div>
+  const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
+  return <p className={className}>
+   {tweet.id} - {tweet.content}
+  </p>
 }
 
 function App() {
@@ -47,11 +48,11 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <p>
+        <div>
           {tweets.map((item, index)=>{
-            return <Tweet tweet={item} key={index} />
+            return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
           })}
-        </p>
+        </div>
         <a
           className="App-link"
           href="https://reactjs.org"
