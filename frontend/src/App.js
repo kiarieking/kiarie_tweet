@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import logo from './logo.svg';
 import './App.css';
-import {TweetList} from './Tweets'
+import {TweetsComponent} from './Tweets'
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <TweetList/>
+          <TweetsComponent/>
         </div>
         <a
           className="App-link"
