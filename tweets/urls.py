@@ -9,5 +9,5 @@ urlpatterns = [
     path('delete/<int:tweet_id>', views.tweet_delete_view, name='tweet_delete'),
     path('like/<int:tweet_id>', views.tweet_like_view, name='like_tweet'),
     path('tweet_like/action', views.tweet_action_view, name='tweet_like'),
-    path('react', TemplateView.as_view(template_name='react.html'))
+    path('react', TemplateView.as_view(template_name='react_via_django.html'))
 ]

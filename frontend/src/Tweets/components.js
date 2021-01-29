@@ -34,23 +34,30 @@ export function TweetList(props){
     console.log(props.newTweets)
     const [tweetsInit, setTweetsInit] = useState([])
     const [tweets, setTweets] = useState([])
+    const [tweetsDidSet, setTweetsDidSet] = useState(false)
+
     useEffect(()=>{
     const final = [...props.newTweets].concat(tweetsInit)
       if(final.length !== tweets.length){
         setTweets(final)
       }
     },[props.newTweets, tweets, tweetsInit])
+
     useEffect(()=>{
-      const callback = (response, status)=>{
-        if (status===200){
-        setTweetsInit(response)
+      if(tweetsDidSet === false){
+
+        const callback = (response, status)=>{
+          if (status===200){
+          setTweetsInit(response)
+          setTweetsDidSet(true)
+          }
+          else{
+            alert("There was an error!")
+          }
         }
-        else{
-          alert("There was an error!")
-        }
-      }
-      loadtweets(callback)
-    },[])
+        loadtweets(callback)
+    }},[tweetsInit, tweetsDidSet, setTweetsDidSet])
+  }
   
     return tweets.map((item, index)=>{
       return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
