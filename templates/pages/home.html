@@ -9,7 +9,7 @@
 
 <div class='row mb-3'>
     <div class='col-md-4 mx-auto col-10'>
-        <form id='tweet-create-form' class='form' method='POST' action='/tweet-create'>
+        <form id='tweet-create-form' class='form' method='POST' action='/api/tweet-create'>
             {% csrf_token %}
             <div class="d-none alert alert-danger" id="tweet-create-form-error"></div>
             <input type="hidden" value='/home' name='next'/>
@@ -18,6 +18,8 @@
         </form>
     </div>
 </div>
+
+<div id="KiarieTweets"></div>
 
 <div class='row' id='tweets'>
     loading...
@@ -97,11 +99,11 @@
             }
             else if(xhr.status===401){
                 alert("You must be logged in to tweet :(")
-                window.location.href = "/login"
+                window.location.href = "/api/login"
             }
             else if(xhr.status===403){
                 alert("You need to be logged in to tweet :(")
-                window.location.href = "/login"
+                window.location.href = "/api/login"
             }
             // console.log(serverResponse)
             // loadtweets(tweetelement)
@@ -118,7 +120,7 @@
 
     function handleTweetAction(tweet_id,currentLikes,action){
         const csrftoken = getCookie('csrftoken');
-        const url = 'tweet_like/action'
+        const url = '/api/tweet_like/action'
         const method = 'POST'
         const xhr = new XMLHttpRequest()
         const data = JSON.stringify({
@@ -167,7 +169,7 @@
     function loadtweets(tweetsEl){
         const xhr = new XMLHttpRequest()
         const method = 'GET'
-        const url = '/tweets'
+        const url = '/api/tweets'
         const responseType = 'json'
 
         xhr.responseType=responseType
